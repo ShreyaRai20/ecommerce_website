@@ -1,66 +1,15 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import {
-  increment,
-  incrementAsync,
-  selectCount,
-} from '../ProductListSlice';
+import { fetchAllProductsAsync, selectAllProducts } from '../ProductSlice';
 import { Link } from 'react-router-dom';
 
 //1st template 
 
-const products = [
-  {
-    id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$35',
-    color: 'Black',
-  },
-  {
-    id: 2,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$45',
-    color: 'Black',
-  },
-  {
-    id: 3,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$65',
-    color: 'Black',
-  },
-  {
-    id: 4,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$32',
-    color: 'Black',
-  },
-  {
-    id: 5,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$23',
-    color: 'Black',
-  }
-  // More products...
-]
+
 
 // 2nd template
 
@@ -115,11 +64,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductList() {
-  const count = useSelector(selectCount);
+export default function Product() {
   const dispatch = useDispatch();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const products = useSelector(selectAllProducts);
 
+  useEffect(()=>{
+    dispatch(fetchAllProductsAsync())
+  },[dispatch]);
 
   return (
     <>
@@ -341,7 +293,7 @@ export default function ProductList() {
             <div key={product.id} className="group relative">
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                 <img
-                  src={product.imageSrc}
+                  src={product.thumbnail}
                   alt={product.imageAlt}
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                 />
