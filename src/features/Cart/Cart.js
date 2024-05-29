@@ -7,6 +7,7 @@ import {
 } from './cartSlice';
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Link } from 'react-router-dom';
 
 const products = [
   {
@@ -65,7 +66,11 @@ function Cart() {
                                     <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <div className="text-gray-500">Qty 
+                                    <div className="text-gray-500">
+                                    <label htmlFor="quantity" 
+                                    className="inline mr-5 text-sm font-medium leading-6 text-gray-900">
+                                    Qty 
+                                    </label>
                                     <select>
                                       <option value = "1" >1</option>
                                       <option value = "2" >2</option>
@@ -106,7 +111,8 @@ function Cart() {
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
-                          or{' '}
+                          or {" "}
+                          <Link to ="/">
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -115,6 +121,7 @@ function Cart() {
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>
                           </button>
+                          </Link>
                         </p>
                       </div>
         </div>

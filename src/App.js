@@ -10,7 +10,7 @@ import {
   Link,
 } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
-import Cart from './features/Cart/Cart';
+import CartPage from './pages/CartPage';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/cart",
-    element: (<Cart/>),
+    element: (<CartPage/>),
   },
 ]);
 
