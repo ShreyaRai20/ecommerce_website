@@ -73,6 +73,7 @@ function Navbar({children}) {
         3
       </span>
                     <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                    
                   </button>
                   </Link>
 
