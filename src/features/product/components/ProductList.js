@@ -23,26 +23,33 @@ const sortOptions = [
 
 const filters = [
   {
-    id: 'color',
-    name: 'Color',
+    id: 'Brand',
+    name: 'Brand',
     options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
+{value: 'Essence', label: 'Essence', checked: false},
+{value: 'Glamour Beauty', label: 'Glamour Beauty', checked: false},
+{value: 'Velvet Touch', label: 'Velvet Touch', checked: false},
+{value: 'Chic Cosmetics', label: 'Chic Cosmetics', checked: false},
+{value: 'Nail Couture', label: 'Nail Couture', checked: false},
+{value: 'Calvin Klein', label: 'Calvin Klein', checked: false},
+{value: 'Chanel', label: 'Chanel', checked: false},
+{value: 'Dior', label: 'Dior', checked: false},
+{value: 'Dolce & Gabbana', label: 'Dolce & Gabbana', checked: false},
+{value: 'Gucci', label: 'Gucci', checked: false},
+{value: 'Annibale Colombo', label: 'Annibale Colombo', checked: false}, 
+{value: 'Furniture Co.', label: 'Furniture Co.', checked: false},
+{value: 'Knoll', label: 'Knoll', checked: false},
+{value: 'Bath Trends', label: 'Bath Trends', checked: false},
     ],
   },
   {
-    id: 'category',
+    id: 'Category',
     name: 'Category',
     options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
+      { value: "beauty", label: "beauty", checked: false },
+      { value: "fragrances", label: "fragrances", checked: false },
+      { value: "furniture", label: "furniture", checked: true },
+      { value: "groceries", label: "groceries", checked: false },
     ],
   },
   {
@@ -232,7 +239,6 @@ export default function Product() {
             <h2 id="products-heading" className="sr-only">
               Products
             </h2>
-
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
@@ -264,6 +270,7 @@ export default function Product() {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
+                                  onChange={e=>handleFilter(e,section,option)}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
