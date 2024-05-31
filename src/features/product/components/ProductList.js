@@ -4,21 +4,19 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import { fetchAllProductsAsync, selectAllProducts } from '../ProductSlice';
+import { fetchAllProductsAsync, fetchProductsByFiltersAsync, selectAllProducts } from '../ProductSlice';
 import { Link } from 'react-router-dom';
 
 //1st template 
 
-
+// 
 
 // 2nd template
 
 const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
+  { name: 'Best Rating', sort : 'rating', order : 'desc', current: false },
+  { name: 'Price: Low to High', sort : 'price', order : 'asc', current: false },
+  { name: 'Price: High to Low', sort : 'price', order : 'desc', current: false },
 ]
 
 const filters = [
@@ -48,7 +46,7 @@ const filters = [
     options: [
       { value: "beauty", label: "beauty", checked: false },
       { value: "fragrances", label: "fragrances", checked: false },
-      { value: "furniture", label: "furniture", checked: true },
+      { value: "furniture", label: "furniture", checked: false },
       { value: "groceries", label: "groceries", checked: false },
     ],
   },
@@ -75,6 +73,19 @@ export default function Product() {
   const dispatch = useDispatch();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const products = useSelector(selectAllProducts);
+  const [filter,setFilter] = useState({});
+
+  const handleFilter = (e,section,option) =>{
+    const newFilter = {...filter,[section.id]:option.value}
+    setFilter(newFilter)
+    dispatch(fetchProductsByFiltersAsync(newFilter))
+  }
+
+  const handleSort = (e,option) => {
+    const newFilter = {...filter, _sort : option.sort, _order : option.order}
+    setFilter(newFilter)
+    dispatch(fetchProductsByFiltersAsync(newFilter))
+  }
 
   useEffect(()=>{
     dispatch(fetchAllProductsAsync())
@@ -202,8 +213,8 @@ export default function Product() {
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.href}
+                            <p
+                              onClick = {e=> handleSort(e,option)}
                               className={classNames(
                                 option.current ? 'font-medium text-gray-900' : 'text-gray-500',
                                 active ? 'bg-gray-100' : '',
@@ -211,7 +222,7 @@ export default function Product() {
                               )}
                             >
                               {option.name}
-                            </a>
+                            </p>
                           )}
                         </Menu.Item>
                       ))}
@@ -270,7 +281,7 @@ export default function Product() {
                                   defaultValue={option.value}
                                   type="checkbox"
                                   defaultChecked={option.checked}
-                                  onChange={e=>handleFilter(e,section,option)}
+                                  onChange = {e=>handleFilter(e,section,option)}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
@@ -308,10 +319,10 @@ export default function Product() {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <a href={product.href}>
+                    <p>
                       <span aria-hidden="true" className="absolute inset-0" />
                       {product.name}
-                    </a>
+                    </p>
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                 </div>
